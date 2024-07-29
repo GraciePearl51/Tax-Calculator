@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculator</title>
+    <style>
+        h1 {text-align: center;color: #0b7884;}
+        h3 { padding-left: 8%; text-align: left; color: #097d8a; }
+        table { table-layout:fixed;border-collapse: collapse;padding: 30px;border-spacing: 30px;}
+        th, td { padding-right: 5%;padding-top: 3%; text-align: left; border: 1px solid #E2F0F0;text-overflow:clip;margin:10%; }
+        th { background-color: #f2f2f2; }
+        form { text-align: left; padding: 3%; display: table; background-color: #e6f1f3; }
+        p { display: table-row; }
+        label { display: table-cell; }
+        input { display: table-cell; margin-bottom: 15px; }
+        html { background-color: #CEE4E6; font-family: Arial, Helvetica, sans-serif; color: #08737F; }
+        .center {
+            margin: 0;
+            position: absolute;
+            padding: 15px 50px;
+            left: 50%;
+            cursor: pointer;
+            border: none;
+            background-color: #08737F;
+            color: #E2F0F0;
+        }
+        .centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+        #myButton {
+            color: #cfe1e3;
+            background-color: #08737F;
+            padding-right: 10%;
+            padding-left: 10%;
+            padding-top: 5%;
+            padding-bottom: 5%;
+            border-radius: 10px;
+        }
+        .split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+.right {
+   
+    right: 0;}
+    .left {
+        
+        left: 0;}
+    </style>
+</head>
+<body>
+
+<h1>Indian Tax Calculator</h1>
+<h3>Your Salary Details</h3>
+
+    <div  class="split left" >
+        <div class="centered">
+        <form id="taxForm" onsubmit="taxCalculator(event);" >
+            <p><label for="AnnualPackage">Annual Package:</label>
+            <input type="number" id="AnnualPackage" name="AnnualPackage" required></p>
+
+            <p><label for="Hike">Hike in Percentage(%):</label>
+            <input type="number" id="Hike" name="Hike" required></p>
+
+            <p><label for="Mobile Handset">Mobile Handset:</label>
+            <input type="number" id="MobileHandset" name="Mobile Handset" required></p>
+
+            <p><label for="Telephone & Internet">Telephone & Internet:</label>
+            <input type="number" id="TelephoneInternet" name="Telephone & Internet" required></p>
+
+            <p><label for="Meal Exemption">Meal Exemption:</label>
+            <input type="number" id="MealExemption" name="Meal Exemption" required></p>
+
+            <p><label for="Gift Exemption">Gift Exemption:</label>
+            <input type="number" id="GiftExemption" name="Gift Exemption" required></p>
+
+            <p><label for="Section 80C Deductions">Section 80C Deductions:</label>
+            <input type="number" id="Section80CDeductions" name="Section 80C Deductions" required></p>
+
+            <p><label for="80D Medical">80D Medical:</label>
+            <input type="number" id="80DMedical" name="80D Medical" required></p>
+
+            <p><label for="Section 80CCD1(B) NPS Tier I">Section 80CCD1(B) NPS Tier I:</label>
+            <input type="number" id="Section80CCD1BNPSTierI" name="Section 80CCD1(B) NPS Tier I" required></p>
+
+            <p><label for="Standard Deductions">Standard Deductions:</label>
+            <input type="number" id="StandardDeductions" name="Standard Deductions" required></p>
+
+            <p><label for="Meal Deductions">Meal Deductions:</label>
+            <input type="number" id="MealDeduction" name="MealDeduction" required></p>
+
+            <p><label for="Gift Deductions">Gift Deductions:</label>
+            <input type="number" id="GiftDeductions" name="GiftDeductions" required></p>
+
+            <input type="submit" id="myButton" value="Submit">
+        </form>
+        </div>
+    </div>
+    <div class="split right" id="calculation" style="display: none;">
+        <div class="centered">
+        <table id="hidenseek">
+            <tr><th>Parameter</th><th>Value</th></tr>
+            <tr><td>Current Package</td><td id="CurrentPackage"></td></tr>
+            <tr><td>Total HRA</td><td id="TotalHRA"></td></tr>
+            <tr><td>Other IT Deductions</td><td id="OtherITDeductions"></td></tr>
+            <tr><td>Taxable Income</td><td id="TaxableIncome"></td></tr>
+            <tr><td>Annual Tax</td><td id="Tax"></td></tr>
+            <tr><td>Salary</td><td id="Salary"></td></tr>
+            <tr><td>Tax per Month</td><td id="PerMonthTax"></td></tr>
+            <tr><td>PF & PT</td><td id="PFPT"></td></tr>
+            <tr><td>Meal Deduction</td><td id="mealDeduction"></td></tr>
+            <tr><td>Gift Deductions</td><td id="giftDeductions"></td></tr>
+            <tr><td style="color:#0c033c; background-color: #68bae7;">In Hand Salary Per Month</td><td id="InHandSalaryPerMonth" style="color:#0c033c; background-color:#68bae7;"></td></tr>
+        </table>
+        </div>
+    </div>
+
+<script type="text/javascript">
+function taxCalculator(event){
+    event.preventDefault();
+    document.getElementById("calculation").style.display = "table";
+    var AnnualPackage = parseInt(document.getElementById("AnnualPackage").value);
+    localStorage.setItem("AnnualPackage", AnnualPackage);
+    var H = parseFloat(document.getElementById("Hike").value) / 100;
+    localStorage.setItem("Hike", H);
+    var MH = parseInt(document.getElementById("MobileHandset").value);
+    localStorage.setItem("MobileHandset", MH);
+    var TI = parseInt(document.getElementById("TelephoneInternet").value);
+    localStorage.setItem("TelephoneInternet", TI);
+    var ME = parseInt(document.getElementById("MealExemption").value);
+    localStorage.setItem("MealExemption", ME);
+    var GE = parseInt(document.getElementById("GiftExemption").value);
+    localStorage.setItem("GiftExemption", GE);
+    var SCD = parseInt(document.getElementById("Section80CDeductions").value);
+    localStorage.setItem("Section80CDeductions", SCD);
+    var M = parseInt(document.getElementById("80DMedical").value);
+    localStorage.setItem("80DMedical", M);
+    var SNT = parseInt(document.getElementById("Section80CCD1BNPSTierI").value);
+    localStorage.setItem("Section80CCD1BNPSTierI", SNT);
+    var SD = parseInt(document.getElementById("StandardDeductions").value);
+    localStorage.setItem("StandardDeductions", SD);
+    var mealDeduction = parseInt(document.getElementById("MealDeduction").value);
+    localStorage.setItem("MealDeduction", mealDeduction);
+    var giftDeductions = parseInt(document.getElementById("GiftDeductions").value);
+    localStorage.setItem("GiftDeductions", giftDeductions);
+
+    var P = AnnualPackage + AnnualPackage * H;
+    localStorage.setItem("P", P);
+
+    var totalHRA = parseInt(P / 2 * 40 / 100);
+    localStorage.setItem("TH", totalHRA);
+
+    var OID = MH + TI + ME + GE + SCD + M + SNT + SD;
+    localStorage.setItem("OID", OID);
+
+    var TAI = P - (totalHRA + OID);
+    localStorage.setItem("TAI", TAI);
+
+    var TT;
+    if(TAI <= 250000) {
+        TT = 0;
+    } else if(TAI > 250000 && TAI <= 500000) {
+        TT = (TAI - 250000) * 0.05;
+    } else if(TAI > 500000 && TAI <= 1000000) {
+        TT = (500000 - 250000) * 0.05 + (TAI - 500000) * 0.2;
+    } else if(TAI > 1000000 && TAI <= 1200000) {
+        TT = (500000 - 250000) * 0.05 + (1000000 - 500000) * 0.2 + (TAI - 1000000) * 0.3;
+    }
+    TT = parseInt(TT * 1.04);
+    localStorage.setItem("TT", TT);
+
+    var SM = parseInt(P / 12);
+    localStorage.setItem("SM", SM);
+    var TPM = parseInt(TT / 12);
+    localStorage.setItem("TPM", TPM);
+    const PFPT = 2000;
+    localStorage.setItem("PFPT", PFPT);
+
+    var IHSM = SM - TPM - PFPT - mealDeduction - giftDeductions;
+    localStorage.setItem("IHSM", IHSM);
+
+    document.getElementById("CurrentPackage").innerText = P;
+    document.getElementById("TotalHRA").innerText = totalHRA;
+    document.getElementById("OtherITDeductions").innerText = OID;
+    document.getElementById("TaxableIncome").innerText = TAI;
+    document.getElementById("Tax").innerText = TT;
+    document.getElementById("Salary").innerText = SM;
+    document.getElementById("PerMonthTax").innerText = TPM;
+    document.getElementById("PFPT").innerText = PFPT;
+    document.getElementById("mealDeduction").innerText = mealDeduction;
+    document.getElementById("giftDeductions").innerText = giftDeductions;
+    document.getElementById("InHandSalaryPerMonth").innerText = IHSM;
+
+    return false;
+}</script>
+</body>
+</html>
