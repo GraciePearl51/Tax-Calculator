@@ -4,109 +4,82 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tax Calculator</title>
-    <style>
-        h1 {text-align: center;color: #0b7884;}
-        h3 { padding-left: 8%; text-align: left; color: #097d8a; }
-        table { table-layout:fixed;border-collapse: collapse;padding: 30px;border-spacing: 30px;}
-        th, td { padding-right: 5%;padding-top: 3%; text-align: left; border: 1px solid #E2F0F0;text-overflow:clip;margin:10%; }
-        th { background-color: #f2f2f2; }
-        form { text-align: left; padding: 3%; display: table; background-color: #e6f1f3; }
-        p { display: table-row; }
-        label { display: table-cell; }
-        input { display: table-cell; margin-bottom: 15px; }
-        html { background-color: #CEE4E6; font-family: Arial, Helvetica, sans-serif; color: #08737F; }
-        .center {
-            margin: 0;
-            position: absolute;
-            padding: 15px 50px;
-            left: 50%;
-            cursor: pointer;
-            border: none;
-            background-color: #08737F;
-            color: #E2F0F0;
-        }
-        .centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-        #myButton {
-            color: #cfe1e3;
-            background-color: #08737F;
-            padding-right: 10%;
-            padding-left: 10%;
-            padding-top: 5%;
-            padding-bottom: 5%;
-            border-radius: 10px;
-        }
-        .split {
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-.right {
-   
-    right: 0;}
-    .left {
-        
-        left: 0;}
-    </style>
+   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Indian Tax Calculator</h1>
-<h3>Your Salary Details</h3>
+
 
     <div  class="split left" >
-        <div class="centered">
-        <form id="taxForm" onsubmit="taxCalculator(event);" >
-            <p><label for="AnnualPackage">Annual Package:</label>
-            <input type="number" id="AnnualPackage" name="AnnualPackage" required></p>
+        <div class="main-title">
+            <h1>Indian Tax Calculator</h1>
+            </div>
+        <div class="formContainer">
+          <h3 class="form-title">Your Salary Details</h3>
+       
+          <form id="taxForm" onsubmit="taxCalculator(event);" >
+            <div class="main-user-input">
+            <div class="user-input-box">
+            <p><label for="AnnualPackage" class="centeredR">Annual Package:</label>
+            <input type="number" id="AnnualPackage" name="AnnualPackage" required></p></div>
 
-            <p><label for="Hike">Hike in Percentage(%):</label>
-            <input type="number" id="Hike" name="Hike" required></p>
+            <div class="user-input-box">
+            <p><label for="Hike" class="centeredR">Hike in Percentage(%):</label>
+            <input type="number" id="Hike" name="Hike" required></p></div>
 
-            <p><label for="Mobile Handset">Mobile Handset:</label>
-            <input type="number" id="MobileHandset" name="Mobile Handset" required></p>
+            <div class="user-input-box">
+            <p><label for="Mobile Handset"class="centeredR">Mobile Handset:</label>
+            <input type="number" id="MobileHandset" name="Mobile Handset" required></p></div>
+            
+            <div class="user-input-box">
+            <p><label for="Telephone & Internet"class="centeredR">Telephone & Internet:</label>
+            <input type="number" id="TelephoneInternet" name="Telephone & Internet" required></p></div>
+            
+            <div class="user-input-box">
+            <p><label for="Meal Exemption" class="centeredR">Meal Exemption:</label>
+            <input type="number" id="MealExemption" name="Meal Exemption" required></p></div>
+            
 
-            <p><label for="Telephone & Internet">Telephone & Internet:</label>
-            <input type="number" id="TelephoneInternet" name="Telephone & Internet" required></p>
+            <div class="user-input-box">
+            <p><label for="Gift Exemption" class="centeredR">Gift Exemption:</label>
+            <input type="number" id="GiftExemption" name="Gift Exemption" required></p></div>
+            
+            <div class="user-input-box">
+            <p><label for="Section 80C Deductions" class="centeredR">Section 80C Deductions:</label>
+            <input type="number" id="Section80CDeductions" name="Section 80C Deductions" required></p></div>
+            
+            <div class="user-input-box">
+            <p><label for="80D Medical" class="centeredR">80D Medical:</label>
+            <input type="number" id="80DMedical" name="80D Medical" required></p></div>
 
-            <p><label for="Meal Exemption">Meal Exemption:</label>
-            <input type="number" id="MealExemption" name="Meal Exemption" required></p>
+            <div class="user-input-box">
+            <p><label for="Section 80CCD1(B) NPS Tier I" class="centeredR">Section 80CCD1(B) NPS Tier I:</label>
+            <input type="number" id="Section80CCD1BNPSTierI" name="Section 80CCD1(B) NPS Tier I" required></p></div>
+            
 
-            <p><label for="Gift Exemption">Gift Exemption:</label>
-            <input type="number" id="GiftExemption" name="Gift Exemption" required></p>
+            <div class="user-input-box">
+            <p><label for="Standard Deductions" class="centeredR">Standard Deductions:</label>
+            <input type="number" id="StandardDeductions" name="Standard Deductions" required></p></div>
+            
 
-            <p><label for="Section 80C Deductions">Section 80C Deductions:</label>
-            <input type="number" id="Section80CDeductions" name="Section 80C Deductions" required></p>
+            <div class="user-input-box">
+            <p><label for="Meal Deductions" class="centeredR">Meal Deductions:</label>
+            <input type="number" id="MealDeduction" name="MealDeduction" required></p></div>
+            
 
-            <p><label for="80D Medical">80D Medical:</label>
-            <input type="number" id="80DMedical" name="80D Medical" required></p>
-
-            <p><label for="Section 80CCD1(B) NPS Tier I">Section 80CCD1(B) NPS Tier I:</label>
-            <input type="number" id="Section80CCD1BNPSTierI" name="Section 80CCD1(B) NPS Tier I" required></p>
-
-            <p><label for="Standard Deductions">Standard Deductions:</label>
-            <input type="number" id="StandardDeductions" name="Standard Deductions" required></p>
-
-            <p><label for="Meal Deductions">Meal Deductions:</label>
-            <input type="number" id="MealDeduction" name="MealDeduction" required></p>
-
-            <p><label for="Gift Deductions">Gift Deductions:</label>
-            <input type="number" id="GiftDeductions" name="GiftDeductions" required></p>
-
-            <input type="submit" id="myButton" value="Submit">
+            <div class="user-input-box">
+            <p><label for="Gift Deductions"class="centeredR">Gift Deductions:</label>
+            <input type="number" id="GiftDeductions" name="GiftDeductions" required></p></div>
+<div class="form-submit-btn">
+            <input type="submit" id="myButton" value="Submit"></div> 
+        </div>
         </form>
         </div>
     </div>
     <div class="split right" id="calculation" style="display: none;">
+        <div class="main-title">
+            <h1>Your Tax Details</h1>
+        </div>
         <div class="centered">
         <table id="hidenseek">
             <tr><th>Parameter</th><th>Value</th></tr>
